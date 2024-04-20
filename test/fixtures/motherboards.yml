@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product: MyString
+  processor_supported: MyString
+  ram_supported: MyString
+  slot: 1
+  integrated_video: false
+  computer: one
+
+two:
+  product: MyString
+  processor_supported: MyString
+  ram_supported: MyString
+  slot: 1
+  integrated_video: false
+  computer: two
