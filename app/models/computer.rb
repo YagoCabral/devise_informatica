@@ -16,30 +16,30 @@ class Computer < ApplicationRecord
 
   def validate_single_processor
     if processor.present? && processor.changed?
-      errors.add(:processor, "Você só pode selecionar um processador por máquina") if Processor.where(computer_id: id).exists?
+      errors.add(:processor, "Você só pode selecionar um processador por máquina") if Processor.where(computer: self).exists?
     end
-  end
+  end       
 
   def validate_single_motherboard
     if motherboard.present? && motherboard.changed?
-      errors.add(:motherboard, "Você só pode selecionar uma placa mãe por máquina") if Motherboard.where(computer_id: id).exists?
+      errors.add(:motherboard, "Você só pode selecionar uma placa mãe por máquina") if motherboard.computer_id.present?
     end
   end
   
   def validate_processor_and_motherboard_compatibility
     return unless processor.present? && motherboard.present?
-
-    unless motherboard.processor_supported.include?(processor.brand)
+  
+    unless motherboard.processor_supported.downcase.include?(processor.brand.downcase)
       errors.add(:processor, "A placa mãe selecionada não suporta processadores da marca #{processor.brand}")
     end
-  end
+  end  
 
   def validate_has_rams
     errors.add(:rams, "A máquina deve ter pelo menos uma memória RAM") unless rams.present?
   end
-  
+
   def validate_ram_slots
-    if motherboard && rams.size > motherboard.slot
+    if motherboard && rams.size > motherboard&.slot
       errors.add(:rams, "Total de memórias RAM excede o número de slots da placa mãe")
     end
   end
@@ -52,7 +52,7 @@ class Computer < ApplicationRecord
   end
 
   def validate_video_card_presence
-    if video_card.present?
+    if video_card.present? && processor.changed?
       errors.add(:video_card, "Apenas uma placa de vídeo pode ser selecionada")
     end
   end

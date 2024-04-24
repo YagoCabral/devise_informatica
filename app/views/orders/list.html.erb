@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos Realizados</title>
+    <%= stylesheet_link_tag 'orders' %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Pedidos Realizados</h1>
+      </div>
+      <ul>
+        <% @orders.each do |order| %>
+          <li>
+            <span class="order-id">#<%= order.id %></span> - <span class="customer"><%= order.customer.name %></span>
+            <div class="details">
+              <p><strong>Processador:</strong> <%= order.computer.processor.name %></p>
+              <p><strong>Placa Mãe:</strong> <%= order.computer.motherboard.name %></p>
+              <% order.computer.rams.each do |ram| %>
+                <p><strong>Memória RAM:</strong> <%= "#{ram.name} (#{ram.size}GB)" %></p>
+              <% end %>
+              <% if order.computer.video_card %>
+                <p><strong>Placa de Vídeo:</strong> <%= order.computer.video_card.name %></p>
+              <% else %>
+                <p><strong>Placa de Vídeo:</strong> Integrada</p>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </body>
+</html>

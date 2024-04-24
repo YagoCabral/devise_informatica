@@ -1,3 +1,4 @@
+#Exemplo de JSON a ser enviado para criação de um Pedido, necessario que seja preenchido os dados das peças corretamente, igual ao que foi passado no projeto.
 {
   "customer": {
     "name": "Maria"
@@ -29,15 +30,3 @@
     }
   }
 }
-
-
-
-
-"video_card": [
-  {
-    "name": "Evga Geforce RTX 2060 6GB"
-  },
-  {
-    "name": "Asus ROG Strix Geforce RTX 3060 6GB"
-  }
-]
