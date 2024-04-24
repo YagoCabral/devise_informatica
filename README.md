@@ -18,3 +18,5 @@ Este arquivo contém vários exemplos de pedidos corretos e incorretos, que pode
 Visualização de Pedidos Realizados
 Após o preenchimento do formulário e a submissão dos pedidos, você poderá acessar a lista de pedidos realizados.
 Para visualizar os pedidos feitos, acesse o link ./pedidos_realizados no navegador.
+
+[erd.pdf](https://github.com/YagoCabral/devise_informatica/files/15093837/erd.pdf)
