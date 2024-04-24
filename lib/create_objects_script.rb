@@ -1,11 +1,11 @@
-# Criar registros para processadores
+# Criando processadores
 Processor.create([
   { name: "Core i5", brand: "Intel", computer_id: nil },
   { name: "Core i7", brand: "Intel", computer_id: nil },
   { name: "Ryzen 5", brand: "AMD", computer_id: nil },
   { name: "Ryzen 7", brand: "AMD", computer_id: nil }
 ])
-# Criar registros para RAMs
+# Criando RAMs
 Ram.create([
   { name: "Kingston Hiper X", size: 4 },
   { name: "Kingston Hiper X", size: 8 },
@@ -14,14 +14,14 @@ Ram.create([
   { name: "Kingston Hiper X", size: 64 }
 ])
 
-# Criar registros para placas de vídeo
+# Criando placas de vídeo
 VideoCard.create([
   { name: "Evga Geforce RTX 2060", computer_id: nil },
   { name: "Asus ROG Strix Geforce RTX 3060", computer_id: nil },
   { name: "Gigabyte Radeon RX 6600 XT EAGLE", computer_id: nil }
 ])
 
-# Criar registros para placas-mãe
+# Criando placas-mãe
 Motherboard.create([
   { name: "Asus ROG", processor_supported: "Intel", ram_supported: 16, slot: 2, integrated_video: false, computer_id: nil },
   { name: "Gigabyte Aorus", processor_supported: "AMD", ram_supported: 16, slot: 2, integrated_video: false, computer_id: nil },

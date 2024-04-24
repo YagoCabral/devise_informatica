@@ -8,10 +8,10 @@ class Computer < ApplicationRecord
   validate :validate_single_processor
   validate :validate_single_motherboard
   validate :validate_processor_and_motherboard_compatibility
-  validate :validate_has_ram
-  validate :validate_total_ram_within_motherboard_slots
-  validate :validate_ram_capacity
-  validate :only_one_video_card
+  validate :validate_has_rams
+  validate :validate_ram_slots
+  validate :validate_storage_size
+  validate :validate_video_card_presence
   validate :video_card_required_if_no_integrated_video
 
   def validate_single_processor
@@ -34,38 +34,31 @@ class Computer < ApplicationRecord
     end
   end
 
-  def validate_has_ram
-    errors.add(:ram, "A máquina deve ter pelo menos uma memória RAM") unless ram.present?
+  def validate_has_rams
+    errors.add(:rams, "A máquina deve ter pelo menos uma memória RAM") unless rams.present?
   end
-
-  def validate_total_ram_within_motherboard_slots
-    return unless motherboard
-
-    total_ram_selected = motherboard.rams.sum(:size)
-    if total_ram_selected > motherboard.slot
-      errors.add(:base, "A quantidade total de memórias RAM selecionadas não pode exceder o número de slots de memória da placa mãe")
+  
+  def validate_ram_slots
+    if motherboard && rams.size > motherboard.slot
+      errors.add(:rams, "Total de memórias RAM excede o número de slots da placa mãe")
+    end
+  end
+  
+  def validate_storage_size
+    total_ram_size = rams.inject(0) { |sum, ram| sum + ram.size }
+    if motherboard && total_ram_size > motherboard.ram_supported
+      errors.add(:rams, "Total de armazenamento excede a memória RAM suportada pela placa mãe")
     end
   end
 
-  def validate_ram_capacity
-    return unless motherboard
-
-    total_ram_capacity = Ram.total_size(id)
-    max_ram_supported = motherboard.ram_supported
-
-    if total_ram_capacity > max_ram_supported
-      errors.add(:base, "A capacidade total de RAM não pode exceder #{max_ram_supported} GB")
-    end
-  end
-
-  def only_one_video_card
-    if video_cards.size > 1
-      errors.add(:base, "Apenas uma placa de vídeo pode ser selecionada para o computador")
+  def validate_video_card_presence
+    if video_card.present?
+      errors.add(:video_card, "Apenas uma placa de vídeo pode ser selecionada")
     end
   end
 
   def video_card_required_if_no_integrated_video
-    if motherboard && !motherboard.integrated_video && video_cards.empty?
+    if motherboard && !motherboard.integrated_video && video_card.nil?
       errors.add(:base, "Se a placa mãe não possui vídeo integrado, é obrigatório selecionar uma placa de vídeo.")
     end
   end

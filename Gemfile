@@ -67,3 +67,4 @@ group :test do
 end
 
 gem 'rails-erd'
+gem 'byebug', '~> 11.1', group: :development
